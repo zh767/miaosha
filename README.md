@@ -131,7 +131,7 @@ public class AccessLimitServiceImpl implements AccessLimitService {
 ```
 
 ### 三、隐藏秒杀地址
-```
+```java
     public String createMiaoshaPath(MiaoshaUser user, long goodsId) {
         if (user == null || goodsId <= 0) {
             return null;
@@ -142,7 +142,7 @@ public class AccessLimitServiceImpl implements AccessLimitService {
     }
 ```
 秒杀时 验证前端的path是否与redis存放的一致
-```
+```java
 @RequestMapping(value = "/{path}/do_miaosha", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> miaosha(Model model, MiaoshaUser user,
@@ -162,7 +162,7 @@ public class AccessLimitServiceImpl implements AccessLimitService {
 }
 ```
 ### 四、异步下单
-```
+```java
     @RequestMapping(value = "/{path}/do_miaosha", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> miaosha(Model model, MiaoshaUser user,
@@ -209,7 +209,7 @@ public class AccessLimitServiceImpl implements AccessLimitService {
         return Result.success(0);//排队中
 ```
 mq消费消息
-```
+```java
 @RabbitListener(queues = MQConfig.MIAOSHA_QUEUE)
     public void receive(String message) {
         log.info("receive message:" + message);
@@ -232,7 +232,7 @@ mq消费消息
     }
 ```
 异步秒杀逻辑
-```
+```java
 @Transactional
     public OrderInfo miaosha2(MiaoshaUser user, GoodsVo goods) {
         final String lockKey = new StringBuffer().append(goods.getId()).append(user.getId()).append("-RedissonLock").toString();
@@ -260,7 +260,7 @@ mq消费消息
 ```
 ### 五、30分钟超时订单失效
 定时任务
-```
+```java
 @Scheduled(cron = "0 0/30 * * * ?")
     public void schedulerExpireOrders() {
         try {
@@ -279,7 +279,7 @@ mq消费消息
     }
 ```
 service 扣除订单
-```
+```java
     public void expireOrder(OrderInfo orderInfo) {
         orderDao.deleteOrder(orderInfo.getId());
         orderDao.deleteMiaoshaOrder(orderInfo.getUserId(), orderInfo.getGoodsId(), orderInfo.getId());
