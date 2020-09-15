@@ -17,8 +17,9 @@ RabbitMQ
 ```
 
 ## 快速启动项目
+```sh
 git clone git@github.com:zh767/miaosha.git
-
+```
 执行sql脚本
 
 修改application.properties里面的自己的Redis,MySQL,RabbitMQ的连接配置
