@@ -5,6 +5,7 @@ GitHub 地址为https://github.com/zh767/miaosha/
 
 
 ## 技术栈
+```
 jdk8
 Spring Boot 2.X
 MyBatis
@@ -13,6 +14,7 @@ Redisson
 MySQL+druid
 Thymeleaf + Bootstrap
 RabbitMQ
+```
 
 ## 快速启动项目
 git clone git@github.com:zh767/miaosha.git
